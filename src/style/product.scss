@@ -1,0 +1,177 @@
+@use 'helpers' as *;
+
+.product-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 264px; // Размеры из макета Figma (264x327)
+  min-height: 327px;
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0px; // В макете Corner radius: 0
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  // Состояние активного товара / ховера (зеленая рамка как у Chinese cabbage)
+  &:hover,
+  &--active {
+    border-color: #2c742f;
+    box-shadow: 0px 0px 12px rgba(44, 116, 47, 0.2);
+
+    .product-item__name {
+      color: #2c742f;
+    }
+
+    .product-item__basket-add {
+      background-color: #00b207;
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
+  // Бейдж скидки (Sale 50%)
+  &__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+    padding: 3px 8px;
+    background-color: #ea4b48;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    border-radius: 4px;
+  }
+
+  // Кнопка избранного (Сердечко)
+  &__favorite-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border: 1px solid #f2f2f2;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &--active svg {
+      fill: #ea4b48;
+      stroke: #ea4b48;
+    }
+  }
+
+  // Обёртка картинки товара
+  &__img {
+    width: 100%;
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  // Нижняя контентная часть
+  &__content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4d4d4d;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+  }
+
+  // Блок с ценами
+  &__prices {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1a1a;
+  }
+
+  &__real-price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1a1a;
+
+    &--old {
+      font-weight: 400;
+      color: #999999;
+      text-decoration: line-through;
+    }
+  }
+
+  // Блок рейтинга (звёзды)
+  &__rating {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #ff8a00;
+  }
+
+  // Кнопка корзины (круглая снизу справа)
+  &__basket-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background-color: #00b207;
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+}

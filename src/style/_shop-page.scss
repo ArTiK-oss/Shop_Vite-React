@@ -1,0 +1,78 @@
+@use 'helpers' as *;
+.shop-page {
+  padding: 15px;
+	display: flex;
+	flex-direction: column;
+  
+	gap: fluid(30, 15);
+	&__content {
+		display: grid;
+    grid-template-columns: 0.3fr 1fr;
+
+	}
+
+	&__sidebar {
+	}
+
+	&__filtered-products {
+	}
+}
+
+.shop {
+	&__toolbar {
+		display: grid;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
+	}
+
+	&__filter-btn {
+	}
+
+	&__sort {
+    width: max-content;
+  	}
+
+	&__results {
+	}
+}
+
+.sidebar {
+	&__categories {
+	}
+
+	&__category {
+	}
+
+	&__ratings {
+	}
+
+	&__rating {
+	}
+
+	&__price {
+	}
+}
+
+.price {
+	&__field {
+	}
+
+	&__label {
+	}
+
+	&__input {
+	}
+
+	&__separator {
+	}
+}
+
+.filtered-products {
+	&__content {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+}
+
+.no-products {
+}

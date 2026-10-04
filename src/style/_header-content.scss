@@ -1,0 +1,333 @@
+@use 'helpers' as *;
+
+.header {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	// Верхняя полоса
+	&__top {
+		border-bottom: 1px solid var(--color-border, #e6e6e6);
+	}
+
+	// Средняя и нижняя полосы (для задела на будущее)
+	&__middle {
+	}
+
+	&__bottom {
+	}
+}
+
+// Блок-микс header-top
+.header-top {
+	background-color: #ffffff;
+	font-family: var(--font-main);
+	font-size: fluid(20, 14);
+	color: var(--color-text);
+
+	&__content {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		padding: 12px 24px;
+	}
+
+	&__geolocation {
+		display: flex;
+		align-items: center;
+	}
+
+	&__utils {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+	}
+}
+
+// Независимый блок Geolocation
+.geolocation {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	&__logo {
+		width: fluid(20, 16);
+		height: fluid(24, 18);
+		display: block;
+	}
+
+	&__title {
+		font-weight: 400;
+		line-height: 1.2;
+	}
+}
+
+// Независимый блок Utils
+.utils {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+
+	&__selections {
+	}
+
+	&__auth {
+	}
+}
+
+// Независимый блок Selections
+.selections {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	&__select {
+		appearance: none;
+		background: transparent;
+		border: none;
+		outline: none;
+		font-family: inherit;
+		font-size: inherit;
+		color: var(--color-text);
+		cursor: pointer;
+		padding-right: 14px;
+		background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666666' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right center;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: var(--color-accent);
+		}
+	}
+}
+
+// Независимый блок Auth
+.auth {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+
+	&__link {
+		color: var(--color-text);
+		text-decoration: none;
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: var(--color-accent);
+		}
+	}
+
+	&__separator {
+		color: var(--color-border);
+		user-select: none;
+	}
+}
+
+// Элемент контейнера (общей обертки)
+.container {
+	// базовые стили контейнера
+}
+
+// Блок header-middle и его элементы
+.header-middle {
+	padding: 24px 0;
+	background-color: var(--bg-white);
+
+	&__content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+	}
+
+	// 1. Логотип и Название (Ecobazar: Poppins Medium 32px)
+	&__logo {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		text-decoration: none;
+
+		img {
+			width: 32px;
+			height: 32px;
+		}
+
+		h1 {
+			font-family: 'Poppins', sans-serif;
+			font-weight: 500;
+			font-size: 32px;
+			line-height: 38px;
+			letter-spacing: -0.03em;
+			color: var(--text-main);
+			margin: 0;
+		}
+	}
+
+	// 2. Поиск с иконкой и зеленой кнопкой
+	&__search {
+		position: relative;
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
+		max-width: 500px;
+		height: 45px;
+		border: 1px solid var(--border-color);
+		border-radius: 6px;
+		overflow: hidden;
+
+		&::after {
+			content: ''; /* Обязательно оставляем пустым, текст '1111' больше не нужен */
+			position: absolute;
+			left: 14px; /* Отступ иконки от левого края */
+			top: 50%;
+			transform: translateY(-50%);
+
+			/* Задаем размеры для самой иконки */
+			width: 16px;
+			height: 16px;
+
+			/* Подключаем SVG-картинку */
+			background: url('/svg/search.svg') no-repeat center / contain;
+
+			pointer-events: none; /* Клик проходит сквозь иконку внутрь инпута */
+		}
+
+		input {
+			border: none;
+			flex: 1;
+			height: 100%;
+			outline: none;
+			/* 40px слева дают идеальный отступ: 14px (left) + 16px (width) + 10px (зазор до текста) */
+			padding: 0 16px 0 40px;
+			font-family: 'Poppins', sans-serif;
+			font-size: 15px;
+			color: var(--text-main);
+			background: transparent;
+
+			&::placeholder {
+				color: var(--color-grey-50);
+				opacity: 1;
+			}
+		}
+	}
+
+	// 3. Блок справа (Избранное + Корзина)
+	&__util {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
+	&__favorite {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+
+		img {
+			width: 32px;
+			height: 32px;
+		}
+	}
+}
+
+// 4. Блок Корзины
+.basket {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	&__link {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+
+		img {
+			width: 34px;
+			height: 34px;
+		}
+	}
+
+	&__count {
+		position: absolute;
+		top: 2px;
+		right: 2px;
+		width: 18px;
+		height: 18px;
+		background-color: var(--badge-bg);
+		color: var(--bg-white);
+		font-size: 10px;
+		font-weight: 500;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--bg-white);
+	}
+
+	&__info {
+		p {
+			margin: 0;
+			font-family: 'Poppins', sans-serif;
+			font-size: 11px;
+			line-height: 13px;
+			color: var(--text-secondary);
+			display: flex;
+			flex-direction: column;
+			gap: 3px;
+		}
+	}
+
+	&__price {
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 15px;
+		color: var(--text-main);
+	}
+	&__count {
+		font-family:
+			'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		position: absolute;
+		right: -5px;
+		top: 0px;
+		border-radius: 50%;
+		padding: 5px;
+		font-size: fluid(16, 9);
+		color: #ffffff;
+		background: var(--color-accent);
+	}
+}
+
+.header-bottom {
+	padding: 10px;
+	background: var(--color-dark-20);
+	&__content {
+		color: var(--color-dark-50);
+		font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-size: large;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	&__navigation {
+		display: flex;
+		align-items: center;
+		gap: fluid(25 , 17);
+	}
+	&__phone{
+		display: flex;
+		align-items: center;
+		gap: fluid(15 , 10);
+	}
+	&__phone-icon{
+	}
+	&__phone-text{
+	}
+}

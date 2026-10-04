@@ -1,0 +1,54 @@
+[
+	{
+		"id": "fresh-fruit",
+		"name": "Fresh Fruit",
+		"icon": "/images/categories/fruit.png"
+	},
+	{
+		"id": "fresh-vegetables",
+		"name": "Fresh Vegetables",
+		"icon": "/images/categories/vegetables.png"
+	},
+	{
+		"id": "meat-fish",
+		"name": "Meat & Fish",
+		"icon": "/images/categories/meat-fish.png"
+	},
+	{ "id": "snacks", "name": "Snacks", "icon": "/images/categories/snacks.png" },
+	{
+		"id": "beverages",
+		"name": "Beverages",
+		"icon": "/images/categories/beverages.png"
+	},
+	{
+		"id": "beauty-health",
+		"name": "Beauty & Health",
+		"icon": "/images/categories/beauty.png"
+	},
+	{
+		"id": "bread-bakery",
+		"name": "Bread & Bakery",
+		"icon": "/images/categories/bread.png"
+	},
+	{
+		"id": "baking-needs",
+		"name": "Baking Needs",
+		"icon": "/images/categories/baking.png"
+	},
+	{
+		"id": "cooking",
+		"name": "Cooking",
+		"icon": "/images/categories/cooking.png"
+	},
+	{
+		"id": "diabetic-food",
+		"name": "Diabetic Food",
+		"icon": "/images/categories/diabetic.png"
+	},
+	{
+		"id": "dish-detergents",
+		"name": "Dish Detergents",
+		"icon": "/images/categories/detergents.png"
+	},
+	{ "id": "oil", "name": "Oil", "icon": "/images/categories/oil.png" }
+]

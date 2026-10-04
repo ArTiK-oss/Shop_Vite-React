@@ -1,0 +1,57 @@
+@use 'helpers' as *;
+.price {
+	width: 33%;
+	display: flex;
+	align-items: center;
+
+	gap: 10px;
+	padding: 8px 0;
+}
+
+.price__field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1;
+}
+
+.price__label {
+	font-size: 12px;
+	color: #666;
+	font-weight: 500;
+}
+
+.price__input {
+	padding: 8px 12px;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #333;
+	outline: none;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.price__input:focus {
+	border-color: #007bff;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.price__separator {
+	color: #888;
+	font-weight: bold;
+	align-self: flex-end;
+	padding-bottom: 8px;
+}
+
+/* Скрытие дефолтных стрелочек инпута (по желанию) */
+.price__input::-webkit-outer-spin-button,
+.price__input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.price__input[type='number'] {
+	-moz-appearance: textfield;
+}

@@ -1,0 +1,7 @@
+@use 'helpers' as *;
+.link {
+	color: var(--color-hover);
+	&:hover {
+		text-decoration: underline;
+	}
+}

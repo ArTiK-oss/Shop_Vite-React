@@ -1,0 +1,39 @@
+@use 'helpers' as *;
+
+.accordion {
+	display: flex;
+	flex-direction: column;
+
+	&__header {
+		width: max-content;
+		display: flex;
+		align-items: center;
+		padding: 20px 0; /* Боковые паддинги лучше убрать, чтобы шапка была вровень с фильтрами */
+		cursor: pointer;
+		user-select: none;
+
+		/* При открытии поворачиваем стрелочку */
+		&.is-open {
+			.accordion__arrow {
+				transform: rotate(180deg);
+			}
+		}
+	}
+
+	&__title {
+		font-family: 'Courier New', Courier, monospace;
+		font-size: large;
+	}
+
+	&__arrow {
+		transition: transform 0.3s ease;
+	}
+
+	&__main {
+		@include hide;
+
+		&.is-open {
+			@include show;
+		}
+	}
+}
