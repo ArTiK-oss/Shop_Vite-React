@@ -1,32 +1,45 @@
 import { useContext } from 'react'
 import { MainContext } from './MainContext'
 import Rating from './Rating'
-export default function ProductCard({ product, key }) {
-	const { state, dispatch } = useContext(MainContext)
 
-	// Проверяем, находится ли этот товар в избранном
+export default function ProductCard({ product }) {
+	const { state, dispatch, modalDispatch } = useContext(MainContext)
+
 	const isFavorite = state.wishList.some(item => item.id === product.id)
 
-	// Расчет цены со скидкой
 	const discountedPrice =
 		product.discountPercent > 0
 			? (product.price * (1 - product.discountPercent / 100)).toFixed(2)
 			: null
 
+	const handleOpenModal = () => {
+		modalDispatch({ type: 'OPEN_MODAL', product })
+	}
+
+	const handleToggleWishlist = e => {
+		e.stopPropagation()
+		dispatch({ type: 'CHECK_WISHLIST', product })
+	}
+
+	const handleAddToCart = e => {
+		e.stopPropagation() 
+		dispatch({ type: 'ADD_PRODUCT', product })
+	}
+
 	return (
-		<li className='product-item product-itme' key={key}>
-			{/* Бейдж скидки */}
+		<li
+			className='product-item'
+			onClick={handleOpenModal} 
+		>
 			{product.discountPercent > 0 && (
 				<span className='product-item__badge'>
 					Sale {product.discountPercent}%
 				</span>
 			)}
-
-			{/* Кнопка "В избранное" */}
 			<button
 				type='button'
 				className={`product-item__favorite-btn ${isFavorite ? 'product-item__favorite-btn--active' : ''}`}
-				onClick={() => dispatch({ type: 'CHECK_WISHLIST', product })}
+				onClick={handleToggleWishlist}
 				aria-label='Add to wishlist'
 			>
 				<svg
@@ -41,7 +54,6 @@ export default function ProductCard({ product, key }) {
 				</svg>
 			</button>
 
-			{/* Изображение товара */}
 			<div className='product-item__img'>
 				<img
 					src={product.image}
@@ -49,7 +61,6 @@ export default function ProductCard({ product, key }) {
 				/>
 			</div>
 
-			{/* Информационный блок */}
 			<div className='product-item__content'>
 				<div className='product-item__info'>
 					<h3 className='product-item__name'>{product.name}</h3>
@@ -71,11 +82,11 @@ export default function ProductCard({ product, key }) {
 						<Rating rating={product.rating} />
 					</div>
 				</div>
-				{/* Кнопка "В корзину" */}
+
 				<button
 					type='button'
 					className='product-item__basket-add'
-					onClick={() => dispatch({ type: 'ADD_PRODUCT', product })}
+					onClick={handleAddToCart}
 					aria-label='Add to cart'
 				>
 					<img src='/svg/basket.svg' alt='Add to cart' />
@@ -84,14 +95,3 @@ export default function ProductCard({ product, key }) {
 		</li>
 	)
 }
-// {
-// 	"id": 1,
-// 	"name": "Green Apple",
-// 	"category": "Fresh Fruit",
-// 	"categoryId": "fresh-fruit",
-// 	"price": 20.99,
-// 	"discountPercent": 50,
-// 	"rating": 4,
-// 	"image": "/images/products/green-apple.png",
-// 	"isPopular": true
-// }

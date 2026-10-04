@@ -6,12 +6,14 @@ import HomePage from './pages/HomePage'
 import ShopPage from './pages/ShopPage'
 import ProductDetailsPage from './pages/ProductDetailsPage'
 import Category from './pages/Category'
+import Modal from './Modal' // <--- Импортируем модалку
+
 // ErrorPage
 import Basket from './pages/Basket'
 import WishList from './pages/WishList'
 import mainData from '../data/products.json'
 import mainCategory from '../data/category.json'
-function lazyFunc(initial) {
+function lazyFuncList(initial) {
 	try {
 		const savedState = localStorage.getItem('app_state')
 		return savedState ? JSON.parse(savedState) : initial
@@ -20,7 +22,7 @@ function lazyFunc(initial) {
 		return initial
 	}
 }
-function ruleReducer(state, action) {
+function ruleReducerList(state, action) {
 	switch (action.type) {
 		case 'ADD_PRODUCT': {
 			const inBasket = state.basket.some(
@@ -71,12 +73,36 @@ function ruleReducer(state, action) {
 			return state
 	}
 }
-const initialState = {
+function ruleReducerModal(state, action) {
+	switch (action.type) {
+		case 'OPEN_MODAL': {
+			return { isOpen: true, modalDate: { ...action.product } }
+		}
+		case 'CLOSE_MODAL': {
+			return { isOpen: false, modalDate: {} }
+		}
+		default:
+			return state
+	}
+}
+const initialStateModal = {
+	isOpen: false,
+	modalDate: {},
+}
+const initialStateList = {
 	basket: [],
 	wishList: [],
 }
 export default function App() {
-	const [state, dispatch] = useReducer(ruleReducer, initialState, lazyFunc)
+	const [state, dispatch] = useReducer(
+		ruleReducerList,
+		initialStateList,
+		lazyFuncList,
+	)
+	const [modalState, modalDispatch] = useReducer(
+		ruleReducerModal,
+		initialStateModal,
+	)
 	console.log(mainData)
 	useEffect(() => {
 		try {
@@ -86,7 +112,18 @@ export default function App() {
 		}
 	}, [state])
 	return (
-		<MainContext.Provider value={{ state, dispatch, mainData, mainCategory }}>
+		<MainContext.Provider
+			value={{
+				state,
+				dispatch,
+				mainData,
+				mainCategory,
+				modalState,
+				modalDispatch,
+			}}
+		>
+			
+			<Modal />
 			<Routes>
 				<Route path='/' element={<Layout />}>
 					<Route index element={<HomePage />} />

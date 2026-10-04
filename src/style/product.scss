@@ -1,6 +1,7 @@
 @use 'helpers' as *;
 
 .product-item {
+  cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
