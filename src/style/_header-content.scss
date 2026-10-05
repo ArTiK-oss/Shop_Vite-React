@@ -291,18 +291,6 @@
 		line-height: 15px;
 		color: var(--text-main);
 	}
-	&__count {
-		font-family:
-			'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-		position: absolute;
-		right: -5px;
-		top: 0px;
-		border-radius: 50%;
-		padding: 5px;
-		font-size: fluid(16, 9);
-		color: #ffffff;
-		background: var(--color-accent);
-	}
 }
 
 .header-bottom {
@@ -310,7 +298,9 @@
 	background: var(--color-dark-20);
 	&__content {
 		color: var(--color-dark-50);
-		font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+		font-family:
+			'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+			'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 		font-size: large;
 		display: flex;
 		align-items: center;
@@ -319,15 +309,15 @@
 	&__navigation {
 		display: flex;
 		align-items: center;
-		gap: fluid(25 , 17);
+		gap: fluid(25, 17);
 	}
-	&__phone{
+	&__phone {
 		display: flex;
 		align-items: center;
-		gap: fluid(15 , 10);
+		gap: fluid(15, 10);
 	}
-	&__phone-icon{
+	&__phone-icon {
 	}
-	&__phone-text{
+	&__phone-text {
 	}
 }

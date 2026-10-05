@@ -30,7 +30,6 @@ export function useFetch(url) {
 				}
 			}
 		}
-
 		fetchData()
 		return () => {
 			isMounted = false // Очистка при смене url или размонтировании

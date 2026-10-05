@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { useReducer, useEffect } from 'react'
+import { useReducer , useEffect} from 'react'
 import { MainContext } from './MainContext'
 import Layout from './Layout/Layout'
 import HomePage from './pages/HomePage'
@@ -7,11 +7,11 @@ import ShopPage from './pages/ShopPage'
 import ProductDetailsPage from './pages/ProductDetailsPage'
 import Category from './pages/Category'
 import Modal from './Modal' // <--- Импортируем модалку
-
-// ErrorPage
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import Basket from './pages/Basket'
 import WishList from './pages/WishList'
 import mainData from '../data/products.json'
+import wallet from '../data/wallet.json'
 import mainCategory from '../data/category.json'
 function lazyFuncList(initial) {
 	try {
@@ -94,6 +94,14 @@ const initialStateList = {
 	wishList: [],
 }
 export default function App() {
+	const [lang, setLang] = useLocalStorage('lang', 'en')
+	const [currency, setCurrency] = useLocalStorage('currency', 'usd')
+	const [isUserSet, setIsUserSet] = useLocalStorage('is-user-set', false)
+	const { userWallet } = wallet
+
+	const getRealWallet = () => {
+		return currency === 'rub' ? (userWallet * 84.82).toFixed(2) : userWallet
+	}
 	const [state, dispatch] = useReducer(
 		ruleReducerList,
 		initialStateList,
@@ -103,7 +111,8 @@ export default function App() {
 		ruleReducerModal,
 		initialStateModal,
 	)
-	console.log(mainData)
+	const walletChar = currency === 'rub' ? '₽' : '$'
+
 	useEffect(() => {
 		try {
 			localStorage.setItem('app_state', JSON.stringify(state))
@@ -120,9 +129,16 @@ export default function App() {
 				mainCategory,
 				modalState,
 				modalDispatch,
+				userWallet: getRealWallet(),
+				lang,
+				setLang,
+				currency,
+				setCurrency,
+				isUserSet,
+				setIsUserSet,
+				walletChar,
 			}}
 		>
-			
 			<Modal />
 			<Routes>
 				<Route path='/' element={<Layout />}>

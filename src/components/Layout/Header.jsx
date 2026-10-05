@@ -1,19 +1,24 @@
 import { Link } from 'react-router-dom'
 import { useFetch } from '../../hooks/useFetch'
 import { useEffect, useContext } from 'react'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { MainContext } from '../MainContext'
 
 export default function Header() {
-	const { state } = useContext(MainContext)
+	const {
+		state,
+		userWallet,
+		lang,
+		setLang,
+		currency,
+		setCurrency,
+		isUserSet,
+		setIsUserSet,
+		walletChar,
+	} = useContext(MainContext)
 	const [data, loading, error] = useFetch(
 		'https://ipinfo.io/json?token=02f7b1168f4167',
 	)
 	const totalCount = state.basket.reduce((acc, item) => acc + item.count, 0)
-	const [lang, setLang] = useLocalStorage('lang', 'en')
-	const [currency, setCurrency] = useLocalStorage('currency', 'usd')
-	const [isUserSet, setIsUserSet] = useLocalStorage('is-user-set', false)
-
 	useEffect(() => {
 		document.documentElement.lang = lang
 	}, [lang])
@@ -115,14 +120,18 @@ export default function Header() {
 							<Link to='basket' className='basket__link'>
 								<img src='/svg/basket.svg' alt='basket' />
 								<span
-									className={`basket__count ${totalCount < 1 ? 'visually-hidden' : ''}`}
+									className={`basket__count product-count ${totalCount < 1 ? 'visually-hidden' : ''}`}
 								>
 									{totalCount}
 								</span>
 							</Link>
 							<div className='basket__info'>
 								<p>
-									Shopping Cart <span className='basket__price'>$0.00</span>
+									Shopping Cart
+									<span className='basket__price'>
+										{userWallet}
+										{walletChar}
+									</span>
 								</p>
 							</div>
 						</div>

@@ -3,13 +3,15 @@ import { MainContext } from './MainContext'
 import Rating from './Rating'
 
 export default function ProductCard({ product }) {
-	const { state, dispatch, modalDispatch } = useContext(MainContext)
-
+	const { state, dispatch, modalDispatch, currency , walletChar } = useContext(MainContext)
+	const getRealPrice = () => {
+		return currency === 'rub' ? (product.price * 84.82).toFixed(2) : product.price
+	}
 	const isFavorite = state.wishList.some(item => item.id === product.id)
 
 	const discountedPrice =
 		product.discountPercent > 0
-			? (product.price * (1 - product.discountPercent / 100)).toFixed(2)
+			? (getRealPrice() * (1 - product.discountPercent / 100)).toFixed(2)
 			: null
 
 	const handleOpenModal = () => {
@@ -22,15 +24,12 @@ export default function ProductCard({ product }) {
 	}
 
 	const handleAddToCart = e => {
-		e.stopPropagation() 
+		e.stopPropagation()
 		dispatch({ type: 'ADD_PRODUCT', product })
 	}
 
 	return (
-		<li
-			className='product-item'
-			onClick={handleOpenModal} 
-		>
+		<li className='product-item' onClick={handleOpenModal}>
 			{product.discountPercent > 0 && (
 				<span className='product-item__badge'>
 					Sale {product.discountPercent}%
@@ -68,13 +67,15 @@ export default function ProductCard({ product }) {
 					<div className='product-item__prices'>
 						{discountedPrice ? (
 							<>
-								<span className='product-item__price'>${discountedPrice}</span>
+								<span className='product-item__price'>{walletChar}{discountedPrice}</span>
 								<span className='product-item__real-price product-item__real-price--old'>
-									${product.price}
+									${getRealPrice()}
 								</span>
 							</>
 						) : (
-							<span className='product-item__real-price'>${product.price}</span>
+							<span className='product-item__real-price'>
+							{walletChar}{getRealPrice()}
+							</span>
 						)}
 					</div>
 
@@ -85,7 +86,7 @@ export default function ProductCard({ product }) {
 
 				<button
 					type='button'
-					className='product-item__basket-add'
+					className='product-item__basket-add basket'
 					onClick={handleAddToCart}
 					aria-label='Add to cart'
 				>
