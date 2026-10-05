@@ -102,6 +102,7 @@ export default function App() {
 	const getRealWallet = () => {
 		return currency === 'rub' ? (userWallet * 84.82).toFixed(2) : userWallet
 	}
+	
 	const [state, dispatch] = useReducer(
 		ruleReducerList,
 		initialStateList,

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { MainContext } from '../MainContext'
 import Rating from '../Rating'
 import { Link, useNavigate, Outlet, useParams } from 'react-router-dom'
@@ -7,11 +7,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import Accordion from '../Accordion'
 import { useToolBar } from '../../hooks/useToolBar'
 
-const MIN = 0.1
-const MAX = 100.0
-
 export default function ShopPage() {
-	const { mainData, mainCategory } = useContext(MainContext)
+	const { mainData, mainCategory, currency } = useContext(MainContext)
 	const [sort, setSort] = useLocalStorage('sort', 'Newest')
 	const [categoryToolbar, CategoryToggleSelected] = useToolBar(mainCategory)
 	const [ratingsToolBar, ratingisToggleSecected] = useToolBar([
@@ -21,10 +18,19 @@ export default function ShopPage() {
 		{ rating: 2, id: 2 },
 		{ rating: 1, id: 1 },
 	])
+	const MIN = currency === 'rub' ? (0.1 * 84.82).toFixed(2) : 0.1
+	const MAX = currency === 'rub' ? (100 * 84.82).toFixed(2) : 100
+	console.log(1)
 	const [minPrice, setMinPrice] = useState(MIN)
 	const [maxPrice, setMaxPrice] = useState(MAX)
+	const [prevCurrency, setPrevCurrency] = useState(currency)
 
-	// Вся проверка для MIN выполняется при потере фокуса
+	if (prevCurrency !== currency) {
+		setPrevCurrency(currency)
+		setMinPrice(MIN)
+		setMaxPrice(MAX)
+	}
+
 	const handleMinBlur = () => {
 		if (minPrice === '' || isNaN(Number(minPrice))) {
 			setMinPrice(MIN)
@@ -71,7 +77,9 @@ export default function ShopPage() {
 	// 2. Фильтруем данные
 	const filteredProducts = (mainData || []).filter(
 		({ categoryId, rating, price, discountPercent }) => {
-			const finalPrice = price * (1 - (discountPercent || 0) / 100)
+			const getRealPrice = currency === 'rub' ? (price * 84.82).toFixed(2) : price
+
+			const finalPrice = getRealPrice * (1 - (discountPercent || 0) / 100)
 
 			// Безопасные значение для фильтрации во время набора
 			const effectiveMin =
