@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { useReducer , useEffect} from 'react'
+import { useReducer, useEffect } from 'react'
 import { MainContext } from './MainContext'
 import Layout from './Layout/Layout'
 import HomePage from './pages/HomePage'
@@ -68,7 +68,30 @@ function ruleReducerList(state, action) {
 							),
 			}
 		}
-
+		case 'INCREMENT_PRODUCT': {
+			return {
+				...state,
+				basket: state.basket.map(product => {
+					if (product.id === action.id) {
+						return { ...product, count: product.count + 1 }
+					}
+					return product
+				}),
+			}
+		}
+		case 'DECREMENT_PRODUCT': {
+			return {
+				...state,
+				basket: state.basket
+					.map(product => {
+						if (product.id === action.id) {
+							return { ...product, count: product.count - 1 }
+						}
+						return product
+					})
+					.filter(product => product.count > 0),
+			}
+		}
 		default:
 			return state
 	}
@@ -102,7 +125,7 @@ export default function App() {
 	const getRealWallet = () => {
 		return currency === 'rub' ? (userWallet * 84.82).toFixed(2) : userWallet
 	}
-	
+
 	const [state, dispatch] = useReducer(
 		ruleReducerList,
 		initialStateList,

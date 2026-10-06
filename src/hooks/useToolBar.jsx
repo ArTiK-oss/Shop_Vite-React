@@ -15,5 +15,5 @@ export function useToolBar(data = []) {
 		)
 	}
 
-	return [value, toggleSelected , ]
+	return [value, toggleSelected  ]
 }

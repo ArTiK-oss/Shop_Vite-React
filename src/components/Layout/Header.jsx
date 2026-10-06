@@ -116,19 +116,19 @@ export default function Header() {
 						</Link>
 
 						{/* Выносим корзину в отдельный чистый БЭМ-блок basket */}
-						<div className='header-middle__basket basket'>
-							<Link to='basket' className='basket__link'>
-								<img src='/svg/basket.svg' alt='basket' />
+						<div className='header-middle__basket-icon basket-icon'>
+							<Link to='basket' className='basket-icon__link'>
+								<img src='/svg/basket.svg' alt='basket-icon' />
 								<span
-									className={`basket__count product-count ${totalCount < 1 ? 'visually-hidden' : ''}`}
+									className={`basket-icon__count product-count ${totalCount < 1 ? 'visually-hidden' : ''}`}
 								>
 									{totalCount}
 								</span>
 							</Link>
-							<div className='basket__info'>
+							<div className='basket-icon__info'>
 								<p>
 									Shopping Cart
-									<span className='basket__price'>
+									<span className='basket-icon__price'>
 										{userWallet}
 										{walletChar}
 									</span>

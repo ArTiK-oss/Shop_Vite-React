@@ -53,7 +53,7 @@ export default function Modal() {
 				<div className='modal__basket-add'>
 					<button
 						type='button'
-						className='basket'
+						className='basket-icon'
 						onClick={() => {
 							dispatch({ type: 'ADD_PRODUCT', product: modalDate })
 						}}
@@ -61,7 +61,7 @@ export default function Modal() {
 					>
 						<img src='/svg/basket.svg' alt='Add to cart' />
 						<span
-							className={`basket__count product-count ${totalCount < 1 ? 'visually-hidden' : ''}`}
+							className={`basket-icon__count product-count ${totalCount < 1 ? 'visually-hidden' : ''}`}
 						>
 							{totalCount}
 						</span>

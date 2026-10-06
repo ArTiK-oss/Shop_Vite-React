@@ -18,9 +18,11 @@ export default function ShopPage() {
 		{ rating: 2, id: 2 },
 		{ rating: 1, id: 1 },
 	])
-	const MIN = currency === 'rub' ? (0.1 * 84.82).toFixed(2) : 0.1
-	const MAX = currency === 'rub' ? (100 * 84.82).toFixed(2) : 100
-	console.log(1)
+	const rate = currency === 'rub' ? 84.82 : 1
+	const sortedData = sort === 'Newest' ? mainData.toReversed() : mainData
+	// Чистые числа (без .toFixed)
+	const MIN = 0.1 * rate
+	const MAX = 100 * rate
 	const [minPrice, setMinPrice] = useState(MIN)
 	const [maxPrice, setMaxPrice] = useState(MAX)
 	const [prevCurrency, setPrevCurrency] = useState(currency)
@@ -39,18 +41,15 @@ export default function ShopPage() {
 
 		let val = Number(minPrice)
 
-		// Проверяем рамки MIN и MAX
 		if (val < MIN) val = MIN
 		if (val > MAX) val = MAX
 
-		// Не даем сделать minPrice больше current maxPrice
 		const currentMax = maxPrice === '' ? MAX : Number(maxPrice)
 		if (val > currentMax) val = currentMax
 
 		setMinPrice(val)
 	}
 
-	// Вся проверка для MAX выполняется при потере фокуса
 	const handleMaxBlur = () => {
 		if (maxPrice === '' || isNaN(Number(maxPrice))) {
 			setMaxPrice(MAX)
@@ -59,29 +58,23 @@ export default function ShopPage() {
 
 		let val = Number(maxPrice)
 
-		// Проверяем рамки MIN и MAX
 		if (val < MIN) val = MIN
 		if (val > MAX) val = MAX
 
-		// Не даем сделать maxPrice меньше current minPrice
 		const currentMin = minPrice === '' ? MIN : Number(minPrice)
 		if (val < currentMin) val = currentMin
 
 		setMaxPrice(val)
 	}
 
-	// 1. Находим выбранные значения
 	const selectedCategoryId = categoryToolbar.find(item => item.isSelected)?.id
 	const selectedRating = ratingsToolBar.find(item => item.isSelected)?.rating
 
-	// 2. Фильтруем данные
-	const filteredProducts = (mainData || []).filter(
+	const filteredProducts = (sortedData || []).filter(
 		({ categoryId, rating, price, discountPercent }) => {
-			const getRealPrice = currency === 'rub' ? (price * 84.82).toFixed(2) : price
-
+			const getRealPrice = price * rate
 			const finalPrice = getRealPrice * (1 - (discountPercent || 0) / 100)
 
-			// Безопасные значение для фильтрации во время набора
 			const effectiveMin =
 				minPrice !== '' && !isNaN(Number(minPrice)) ? Number(minPrice) : MIN
 			const effectiveMax =
@@ -161,7 +154,11 @@ export default function ShopPage() {
 									min={MIN}
 									max={MAX}
 									className='price__input'
-									value={minPrice}
+									value={
+										typeof minPrice === 'number'
+											? minPrice.toFixed(2)
+											: minPrice
+									}
 									onChange={e => setMinPrice(e.target.value)}
 									onBlur={handleMinBlur}
 								/>
@@ -177,7 +174,11 @@ export default function ShopPage() {
 									min={MIN}
 									max={MAX}
 									className='price__input'
-									value={maxPrice}
+									value={
+										typeof maxPrice === 'number'
+											? maxPrice.toFixed(2)
+											: maxPrice
+									}
 									onChange={e => setMaxPrice(e.target.value)}
 									onBlur={handleMaxBlur}
 								/>

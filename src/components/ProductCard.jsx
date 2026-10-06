@@ -3,15 +3,22 @@ import { MainContext } from './MainContext'
 import Rating from './Rating'
 
 export default function ProductCard({ product }) {
-	const { state, dispatch, modalDispatch, currency , walletChar } = useContext(MainContext)
+	const { state, dispatch, modalDispatch, currency, walletChar } =
+		useContext(MainContext)
+
+	// Возвращает точное ЧИСЛО с учетом курса
 	const getRealPrice = () => {
-		return currency === 'rub' ? (product.price * 84.82).toFixed(2) : product.price
+		return currency === 'rub' ? product.price * 84.82 : product.price
 	}
+
 	const isFavorite = state.wishList.some(item => item.id === product.id)
 
+	const realPrice = getRealPrice()
+
+	// Точное ЧИСЛО акционной цены
 	const discountedPrice =
 		product.discountPercent > 0
-			? (getRealPrice() * (1 - product.discountPercent / 100)).toFixed(2)
+			? realPrice * (1 - product.discountPercent / 100)
 			: null
 
 	const handleOpenModal = () => {
@@ -37,14 +44,16 @@ export default function ProductCard({ product }) {
 			)}
 			<button
 				type='button'
-				className={`product-item__favorite-btn ${isFavorite ? 'product-item__favorite-btn--active' : ''}`}
+				className={`product-item__favorite-btn ${
+					isFavorite ? 'product-item__favorite-btn--active' : ''
+				}`}
 				onClick={handleToggleWishlist}
 				aria-label='Add to wishlist'
 			>
 				<svg
-					width='20'
-					height='18'
-					viewBox='0 0 20 18'
+					width='25'
+					height='25'
+					viewBox='0 0 25 18'
 					fill={isFavorite ? '#FF0000' : 'none'}
 					stroke={isFavorite ? '#FF0000' : '#1A1A1A'}
 					strokeWidth='1.5'
@@ -65,16 +74,21 @@ export default function ProductCard({ product }) {
 					<h3 className='product-item__name'>{product.name}</h3>
 
 					<div className='product-item__prices'>
-						{discountedPrice ? (
+						{discountedPrice !== null ? (
 							<>
-								<span className='product-item__price'>{walletChar}{discountedPrice}</span>
+								<span className='product-item__price'>
+									{walletChar}
+									{discountedPrice.toFixed(2)}
+								</span>
 								<span className='product-item__real-price product-item__real-price--old'>
-									${getRealPrice()}
+									{walletChar}
+									{realPrice.toFixed(2)}
 								</span>
 							</>
 						) : (
 							<span className='product-item__real-price'>
-							{walletChar}{getRealPrice()}
+								{walletChar}
+								{realPrice.toFixed(2)}
 							</span>
 						)}
 					</div>
